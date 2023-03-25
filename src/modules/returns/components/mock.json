@@ -1,0 +1,51 @@
+{
+    "data" : [
+        {
+            "id": 1,
+            "name": "GST CMP-08",
+            "title": "Statement for payment of self-assessed tax GST CMP-08",
+            "isFiled" : false
+        },
+        {
+            "id": 2,
+            "name": "GSTR4A",
+            "title": "Auto Drafted details",
+            "isFiled" : false
+        }
+    ],
+    "gstcmp08" : [
+        {
+            "Sr.No." : 1,
+            "Description" : "Outward Supplies (including exempt supplies)",
+            "Value": 0.0,
+            "Integrated tax" : "Empty",
+            "Central tax" : 0.0,
+            "State tax" : 0.0
+        },
+        {
+            "Sr.No." : 2,
+            "Description" : "Inward Supplies attracting reverse charge including import of services",
+            "Value": 0.0,
+            "Integrated tax" : "Empty",
+            "Central tax" : 0.0,
+            "State tax" : 0.0
+        },
+        {
+            "Sr.No." : 3,
+            "Description" : "Tax payable",
+            "Value": 0.0,
+            "Integrated tax" : "Empty",
+            "Central tax" : 0.0,
+            "State tax" : 0.0
+        },
+        {
+            "Sr.No." : 4,
+            "Description" : "Interest payable, if any",
+            "Value": 0.0,
+            "Integrated tax" : "Empty",
+            "Central tax" : 0.0,
+            "State tax" : 0.0
+        }
+
+    ]
+}
