@@ -36,3 +36,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.home {
+  height: 85vh;
+  background-image: url('/public/gsthome2.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+}

@@ -3,14 +3,18 @@ import { useNavigate } from 'react-router-dom'
 const Login = () => {
 
   const navigate = useNavigate();
-  const handleClick = () => {
+  const handleClick = (event) => {
     const username = document.getElementById('username').value
     const pass = document.getElementById('pass').value
-
-    if(username === 'abc@gmail.com' && pass === 'abc123') {
-        navigate("/dashboard/index")
-    } else {
-      alert("Invalid Username or Password")
+    if(event.target.value === 1) {
+      if(username === 'abc@gmail.com' && pass === 'abc123') {
+          navigate("/dashboard/index")
+      } else {
+        alert("Invalid Username or Password")
+      } 
+    }
+    else {
+      navigate('/returns/gst_cmp_02/index')
     }
   }
   return (
@@ -27,7 +31,12 @@ const Login = () => {
           <input id="pass" type="password" className='w-2/4 p-2 outline-none'/>
         </div>
         <div className='text-center mt-10'>
-          <button className="w-40 bg-blue-600 text-white p-3 rounded-md" onClick={handleClick}>Login</button>
+          <button className="w-40 bg-blue-600 text-white p-3 rounded-md" onClick={handleClick} value={1} >Login</button>
+        </div>
+        <hr className='m-5'/>
+        <div className=' flex justify-center items-center mt-10 gap-5'>
+          <p>New to Platform ? </p>
+          <button className="w-40 bg-blue-600 text-white p-3 rounded-md" onClick={handleClick} value={2} >Register</button>
         </div>
         </section>
       </div>
