@@ -1,8 +1,8 @@
 import { gql, useMutation } from '@apollo/client';
 import React from 'react'
+import bcrypt from 'bcryptjs-react'
 
-
-const INSERT_FIRM = gql`mutation InsertCompositionDealers($isVerified: Boolean, $Category: Int, $Financial_Year: Int, $Address: String, $GSTIN: String, $Legal_Name: String, $Place: String, $Trade_Name: String) {
+const INSERT_FIRM = gql`mutation InsertCompositionDealers($isVerified: Boolean, $Category: Int, $Financial_Year: Int, $Address: String, $GSTIN: String, $Legal_Name: String, $Place: String, $Trade_Name: String, $Username: String!, $Password: String!) {
     insert_composition_dealers(objects: {
       GSTIN: $GSTIN, 
       Legal_Name: $Legal_Name, 
@@ -11,14 +11,17 @@ const INSERT_FIRM = gql`mutation InsertCompositionDealers($isVerified: Boolean, 
       Category: $Category, 
       Financial_Year: $Financial_Year, 
       isVerified: $isVerified, 
-      Place: $Place}) {
+      Place: $Place,
+      Username : $Username,
+      Password : $Password
+    }) {
       affected_rows
     }
   }
   `
 const Gstcmp02form = () => {
     var type;
-    const [insertFirm, {loading,data,error}] = useMutation(INSERT_FIRM, {
+    const [insertFirm, { loading, data, error }] = useMutation(INSERT_FIRM, {
         onCompleted(data) {
             alert("Successfully Registered !")
         },
@@ -27,7 +30,7 @@ const Gstcmp02form = () => {
         }
     })
 
-    if(loading) return <div className='bg-white flex justify-center items-center'>Submitting...</div>
+    if (loading) return <div className='bg-white flex justify-center items-center'>Submitting...</div>
 
     const handleChange = (event) => {
         type = event.target.value
@@ -44,24 +47,36 @@ const Gstcmp02form = () => {
         var isVerified = document.getElementById('verification').value
         var isSigned = document.getElementById('signature').value
         var allVerified = isDeclared && isVerified && isSigned ? true : false
+        var username = document.getElementById("user_name").value
         var place = document.getElementById('place').value
-        
+        var password = document.getElementById("password").value
+        var confirmPassword = document.getElementById("confirm_password").value
+
+        if(username && (password === confirmPassword)) {
+            var salt = bcrypt.genSaltSync(10);
+            var hash = bcrypt.hashSync(password, salt);
+        } else if (password !== confirmPassword) {
+            alert('Password Mismatch!')
+        }
+
         insertFirm({
-            variables :{
-                GSTIN : gstin,
-                Legal_Name : legalname,
-                Trade_Name : tradename,
+            variables: {
+                GSTIN: gstin,
+                Legal_Name: legalname,
+                Trade_Name: tradename,
                 Address: address,
                 Category: category,
                 Financial_Year: financialYear,
                 isVerified: allVerified,
                 Place: place,
+                Username: username,
+                Password: hash
             }
         })
     }
 
     return (
-        <div className='flex flex-col bg-white w-full h-[85vh] p-2'>
+        <div className='flex flex-col bg-white w-full h-auto p-2'>
             <div>
                 <h2 className='text-center'>Application for opting <b>GST Composition Scheme</b></h2>
                 <p className='text-center'>Please fill out the details below to proceed!</p>
@@ -86,7 +101,20 @@ const Gstcmp02form = () => {
                     </div>
                     <div className='flex items-center justify-between gap-5'>
                         <label className='w-1/4'>Financial Year</label>
-                        <input id="financial_year" type='text' className='flex-1 p-2 border-2 rounded-md outline-none'  />
+                        <input id="financial_year" type='text' className='flex-1 p-2 border-2 rounded-md outline-none' />
+                    </div>
+                    <hr/>
+                    <div className='flex items-center justify-between gap-5'>
+                        <label className='w-1/4'>User Name</label>
+                        <input id="user_name" type='text' className='flex-1 p-2 border-2 rounded-md outline-none' />
+                    </div>
+                    <div className='flex items-center justify-between gap-5'>
+                        <label className='w-1/4'>Password</label>
+                        <input id="password" type='password' className='flex-1 p-2 border-2 rounded-md outline-none' />
+                    </div>
+                    <div className='flex items-center justify-between gap-5'>
+                        <label className='w-1/4'>Confirm New Password</label>
+                        <input id="confirm_password" type='password' className='flex-1 p-2 border-2 rounded-md outline-none' />
                     </div>
                     <section>
                         <div className='bg-gray-300 p-2'>
@@ -94,21 +122,21 @@ const Gstcmp02form = () => {
                         </div>
                         <div className='grid m-2' onChange={handleChange}>
                             <label>
-                                <input type="radio" name="category" value={1}/>Manufacturers,
-                                 other than Manufacturers of notified goods for which option is not available</label>
-                                 <br/>
+                                <input type="radio" name="category" value={1} />Manufacturers,
+                                other than Manufacturers of notified goods for which option is not available</label>
+                            <br />
                             <label>
-                                <input type="radio" name="category" value={2}/>Suppliers, making
+                                <input type="radio" name="category" value={2} />Suppliers, making
                                 supplies referred to in clause(b) of paragraph 6 of Schedule II</label>
-                                <br/>
+                            <br />
                             <label>
-                                <input type="radio" name="category" value={3}/>Any other supplier 
+                                <input type="radio" name="category" value={3} />Any other supplier
                                 eligible for composition levy</label>
                         </div>
                         <div className='bg-gray-300 p-2'>
                             Composition Declaration *:
                         </div>
-                        <div>
+                        <div className="py-2">
                             <label>
                                 <input id="declaration" type="checkbox" name="category" /> I hereby declare that the aforesaid business shall abide
                                 by the conditions and restrictions specified for paying tax under section 10.
@@ -117,25 +145,25 @@ const Gstcmp02form = () => {
                         <div className='bg-gray-300 p-2'>
                             Verification:
                         </div>
-                        <div>
+                        <div className="py-2">
                             <label>
-                                <input id="verification" type="checkbox" name="category" /> I hereby solemnly affirm and declare that the information 
+                                <input id="verification" type="checkbox" name="category" /> I hereby solemnly affirm and declare that the information
                                 declared herein above is true to the best of my knowledge.
                             </label>
                         </div>
                     </section>
-                    <section className="flex justify-around items-center"> 
+                    <section className="flex justify-around items-center">
                         <div className='flex items-center gap-2'>
                             <label>Name of Authorized Signatory</label>
-                            <input id="signature" type='text' className=" p-2 border-2 rounded-md outline-none"/>
+                            <input id="signature" type='text' className=" p-2 border-2 rounded-md outline-none" />
                         </div>
                         <div className='flex items-center gap-2'>
                             <label>Place</label>
-                            <input id="place" type='text' className=" p-2 border-2 rounded-md outline-none"/>
+                            <input id="place" type='text' className=" p-2 border-2 rounded-md outline-none" />
                         </div>
                     </section>
                     <section className='flex justify-end'>
-                        <input type='submit' className='bg-blue-600 text-white py-2 px-4 rounded'/>
+                        <input type='submit' className='bg-blue-600 text-white py-2 px-4 rounded' />
                     </section>
                 </form>
             </div>

@@ -1,22 +1,31 @@
+import { gql, useQuery } from '@apollo/client';
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-const Login = () => {
+import bcrypt from "bcryptjs-react";
 
+
+const CREDENTIALS =gql`query credentials {
+  composition_dealers {
+    id
+    Username
+    Password
+  }
+}
+`
+
+const Login = () => {
+  const {data} = useQuery(CREDENTIALS)
+  const credentials = data?.composition_dealers
   const navigate = useNavigate();
   const handleClick = (event) => {
+    event.stopPropagation()
     const username = document.getElementById('username').value
     const pass = document.getElementById('pass').value
-    if(event.target.value === 1) {
-      if(username === 'abc@gmail.com' && pass === 'abc123') {
-          navigate("/dashboard/index")
-      } else {
-        alert("Invalid Username or Password")
-      } 
+    const temp = credentials.find((user) => username === user?.Username)
+    temp ? 
+    bcrypt.compareSync(pass,temp?.Password) ? navigate(`/dashboard/index/${temp?.id}`) : alert("Wrong password !") 
+    : alert("No matching users !") 
     }
-    else {
-      navigate('/returns/gst_cmp_02/index')
-    }
-  }
   return (
     <div className='h-full flex justify-end border-2 bg-blue-600'>
       <div className="flex items-center bg-white w-2/4" >

@@ -17,7 +17,7 @@ export default function App() {
             <Route index element={<Home/>} />
             <Route path='/login' element={<Login/>} />
             <Route path='/download' element={<Downloads />} />
-            <Route path='/dashboard/index' element={<Dashboard/>} />
+            <Route path='/dashboard/index/:id' element={<Dashboard/>} />
             <Route path='/returns/gst_cmp_08/index' element={<Gstcmp08form/>} />
             <Route path='/returns/gst_cmp_02/index' element={<Gstcmp02form/>} />
             <Route path='/gstfiling' element={<Gstfiling/>} />
