@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import Returns from '../../returns'
 
 
-const Dashboard = (props) => {
-  const {id} = props
+const Dashboard = () => {
   const [show, setShow] = useState(false)
   const handleClick =() => {
     setShow(!show)

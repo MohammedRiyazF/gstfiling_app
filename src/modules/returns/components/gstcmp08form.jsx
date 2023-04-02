@@ -1,15 +1,40 @@
 import React from 'react'
-import data from './mock.json'
+import { useParams } from 'react-router-dom'
+import jsonData from './mock.json'
+import { gql, useQuery } from '@apollo/client'
+import get from 'lodash/get'
+
+const FIRMDATA = gql`query credentials($id: Int!) {
+    composition_dealers(where: {id: {_eq: $id}}) {
+      id
+      GSTIN
+      Legal_Name
+      Trade_Name
+      Address
+      Financial_Year
+      Category
+      Place
+    }
+  }
+  `
 
 const Gstcmp08form = () => {
-    const gstcmp08 = data.gstcmp08
+    let {id} = useParams()
+    const {data} = useQuery(FIRMDATA, {
+        variables: {
+            id : id
+        }
+      })
+    const trader = get(data,'composition_dealers[0]',null)
+
+    const gstcmp08 = jsonData.gstcmp08
     return (
         <div className='flex flex-col bg-white w-full h-[85vh] align-middle'>
             <div className='border-2 p-2'>
                 <section className="md:flex justify-evenly">
-                    <h5>GSTIN123455677890</h5>
-                    <h5><b>Legal Name :</b>Bob Furnitures</h5>
-                    <h5><b>Trade Name :</b> Bob Furnitures</h5>
+                    <h5>{trader?.GSTIN}</h5>
+                    <h5><b>Legal Name :</b>{trader?.Legal_Name}</h5>
+                    <h5><b>Trade Name :</b>{trader?.Trade_Name}</h5>
                     <h5><b>Financial Year :</b> 2021-22</h5>
                     <h5><b>Period :</b>Oct-Dec</h5>
                     <h5><b>Status :</b> Not Filed</h5>
