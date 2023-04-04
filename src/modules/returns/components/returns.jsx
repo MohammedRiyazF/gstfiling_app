@@ -4,10 +4,15 @@ import { UserContext } from '../../../pages/dashboard';
 
 const Returns = (props) => {
     const id = useContext(UserContext); 
-    const {title,name} = props
+    const {title ,name ,year_detail} = props
     const navigate = useNavigate()
     const handleClick = (name) => {
-        name === 'GST CMP-08' ? navigate(`/returns/gst_cmp_08/index/${id}`) : navigate('/returns/gstr4/index')
+        name === 'GST CMP-08' ? navigate(`/returns/gst_cmp_08/index/${id}`,
+        { state : {financial_year : year_detail.financial_year,
+        quarter: year_detail.quarter,
+        period: year_detail.period}}
+        ) 
+        : navigate('/returns/gstr4/index')
     }
     return (
         <div className='bg-blue-300 w-full rounded-md mt-5'>

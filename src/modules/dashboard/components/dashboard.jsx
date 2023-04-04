@@ -4,8 +4,24 @@ import Returns from '../../returns'
 
 const Dashboard = () => {
   const [show, setShow] = useState(false)
+  const initial = {
+    financial_year : '',
+    quarter: '',
+    period: ''
+  }
+  // eslint-disable-next-line
+  const [yearDetail, setYearDetail] = useState(initial)
   const handleClick =() => {
+    var financial_year = document.getElementById('year_list').value
+    var quarter = document.getElementById('quarter_list').value
+    var period = document.getElementById('period_list').value
+    setYearDetail({
+      financial_year: financial_year,
+      quarter: quarter,
+      period: period
+    })
     setShow(!show)
+    
   }
   return (
     <main className=" flex m-10 bg-white rounded-md">
@@ -17,7 +33,7 @@ const Dashboard = () => {
         <section className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 align-middle" >
           <div>
             <label>Financial Year * </label>
-            <input className="border-2 flex items-center" list="year" />
+            <input id="year_list" className="border-2 flex items-center" list="year" />
             <datalist id="year">
               <option value="2021-22" />
               <option value="2022-23" />
@@ -26,7 +42,7 @@ const Dashboard = () => {
           </div>
           <div>
             <label>Ouarter * </label>
-            <input className="border-2 flex items-center" list="quarter" />
+            <input id="quarter_list" className="border-2 flex items-center" list="quarter" />
             <datalist id="quarter">
               <option value="Ouarter 1 (Apr - Jun)" />
               <option value="Quarter 2 (Jul - Sep)" />
@@ -36,7 +52,7 @@ const Dashboard = () => {
           </div>
           <div>
             <label>Period * </label>
-            <input className="border-2 flex items-center" list="period" />
+            <input id="period_list" className="border-2 flex items-center" list="period" />
             <datalist id="period" >
               <option value='January' />
               <option value='February' />
@@ -56,7 +72,7 @@ const Dashboard = () => {
         </section>
         <br/><hr/>
         {show &&
-            <Returns />
+            <Returns year_detail={yearDetail}/>
         }
       </div>
     </main>

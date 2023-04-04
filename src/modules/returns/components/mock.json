@@ -17,34 +17,38 @@
         {
             "Sr.No." : 1,
             "Description" : "Outward Supplies (including exempt supplies)",
-            "Value": 0.0,
-            "Integrated tax" : "Empty",
-            "Central tax" : 0.0,
-            "State tax" : 0.0
+            "Value": "value1",
+            "Integrated_tax" : "integrated_tax1",
+            "Central_tax" : "central_tax1",
+            "State_tax" : "state_tax1",
+            "Cess": "cess1"
         },
         {
             "Sr.No." : 2,
             "Description" : "Inward Supplies attracting reverse charge including import of services",
-            "Value": 0.0,
-            "Integrated tax" : "Empty",
-            "Central tax" : 0.0,
-            "State tax" : 0.0
+            "Value":  "value2",
+            "Integrated_tax" : "integrated_tax2",
+            "Central_tax" : "central_tax2",
+            "State_tax" : "state_tax2",
+            "Cess": "cess2"
         },
         {
             "Sr.No." : 3,
             "Description" : "Tax payable",
-            "Value": 0.0,
-            "Integrated tax" : "Empty",
-            "Central tax" : 0.0,
-            "State tax" : 0.0
+            "Value":  "value3",
+            "Integrated_tax" : "integrated_tax3",
+            "Central_tax" : "central_tax3",
+            "State_tax" : "state_tax3",
+            "Cess": "cess3"
         },
         {
             "Sr.No." : 4,
             "Description" : "Interest payable, if any",
-            "Value": 0.0,
-            "Integrated tax" : "Empty",
-            "Central tax" : 0.0,
-            "State tax" : 0.0
+            "Value": "value4",
+            "Integrated_tax" : "integrated_tax4",
+            "Central_tax" : "central_tax4",
+            "State_tax" : "state_tax4",
+            "Cess": "cess4"
         }
 
     ]
