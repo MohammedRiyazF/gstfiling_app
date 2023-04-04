@@ -76,48 +76,48 @@ const Gstcmp02form = () => {
     }
 
     return (
-        <div className='flex flex-col bg-white w-full h-auto p-2'>
+        <div className='flex flex-col bg-white h-auto p-2'>
             <div>
                 <h2 className='text-center'>Application for opting <b>GST Composition Scheme</b></h2>
                 <p className='text-center'>Please fill out the details below to proceed!</p>
             </div>
             <div className='my-5 mx-7'>
                 <form className='grid gap-5' onSubmit={handleSubmit}>
-                    <div className='flex items-center justify-between gap-5'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                         <label className='w-1/4'>GSTIN</label>
-                        <input id="gstin" type='text' className='flex-1 p-2 border-2 rounded-md outline-none' />
+                        <input id="gstin" type='text' className='w-auto p-2 border-2 rounded-md outline-none' />
                     </div>
-                    <div className='flex items-center justify-between gap-5'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                         <label className='w-1/4'>Legal Name of Business</label>
-                        <input id="legalname" type='text' className='flex-1 p-2 border-2 rounded-md outline-none' />
+                        <input id="legalname" type='text' className='col-auto p-2 border-2 rounded-md outline-none' />
                     </div>
-                    <div className='flex items-center justify-between gap-5'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                         <label className='w-1/4'>Trade name, if any</label>
-                        <input id="tradename" type='text' className='flex-1 p-2 border-2 rounded-md outline-none' />
+                        <input id="tradename" type='text' className='col-auto p-2 border-2 rounded-md outline-none' />
                     </div>
-                    <div className='flex items-center justify-between gap-5'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                         <label className='w-1/4'>Address of Principal Place of Business</label>
-                        <input id="address" type='text' className='flex-1 p-2 border-2 rounded-md outline-none' />
+                        <input id="address" type='text' className='col-auto p-2 border-2 rounded-md outline-none' />
                     </div>
-                    <div className='flex items-center justify-between gap-5'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                         <label className='w-1/4'>Financial Year</label>
-                        <input id="financial_year" type='text' className='flex-1 p-2 border-2 rounded-md outline-none' />
+                        <input id="financial_year" type='text' className='col-auto p-2 border-2 rounded-md outline-none' />
                     </div>
                     <hr/>
-                    <div className='flex items-center justify-between gap-5'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                         <label className='w-1/4'>User Name</label>
-                        <input id="user_name" type='text' className='flex-1 p-2 border-2 rounded-md outline-none' />
+                        <input id="user_name" type='text' className='col-auto p-2 border-2 rounded-md outline-none' />
                     </div>
-                    <div className='flex items-center justify-between gap-5'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                         <label className='w-1/4'>Password</label>
-                        <input id="password" type='password' className='flex-1 p-2 border-2 rounded-md outline-none' />
+                        <input id="password" type='password' className='col-auto p-2 border-2 rounded-md outline-none' />
                     </div>
-                    <div className='flex items-center justify-between gap-5'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                         <label className='w-1/4'>Confirm New Password</label>
-                        <input id="confirm_password" type='password' className='flex-1 p-2 border-2 rounded-md outline-none' />
+                        <input id="confirm_password" type='password' className='col-auto p-2 border-2 rounded-md outline-none' />
                     </div>
                     <section>
-                        <div className='bg-gray-300 p-2'>
+                        <div className='bg-gray-300 p-2 '>
                             Category of Registered Person :
                         </div>
                         <div className='grid m-2' onChange={handleChange}>
@@ -152,12 +152,12 @@ const Gstcmp02form = () => {
                             </label>
                         </div>
                     </section>
-                    <section className="flex justify-around items-center">
-                        <div className='flex items-center gap-2'>
+                    <section className="grid grid-cols-1 sm:grid-cols-2">
+                        <div className='grid grid-cols-1 sm:grid-cols-2 gap-2 text-center'>
                             <label>Name of Authorized Signatory</label>
                             <input id="signature" type='text' className=" p-2 border-2 rounded-md outline-none" />
                         </div>
-                        <div className='flex items-center gap-2'>
+                        <div className='grid grid-cols-1 sm:grid-cols-2 gap-2 text-center'>
                             <label>Place</label>
                             <input id="place" type='text' className=" p-2 border-2 rounded-md outline-none" />
                         </div>

@@ -8,13 +8,13 @@ const Dashboard = () => {
     setShow(!show)
   }
   return (
-    <main className="h-[50vh] flex m-20 bg-white rounded-md">
-      <div className="w-full  p-2">
+    <main className=" flex m-10 bg-white rounded-md">
+      <div className="w-full  p-5">
         <h2>File Returns</h2>
         <hr />
         <h3 className="flex justify-end">* Indicates Mandatory Fields</h3>
         <br />
-        <section className="flex justify-evenly items-end">
+        <section className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 align-middle" >
           <div>
             <label>Financial Year * </label>
             <input className="border-2 flex items-center" list="year" />
@@ -52,13 +52,11 @@ const Dashboard = () => {
               <option value='December' />
             </datalist>
           </div>
-          <button className="bg-blue-600 p-1 text-white rounded-md w-1/4" onClick={handleClick} >Search</button>
+          <button className="bg-blue-600 p-1 my-2 text-white rounded-md w-full" onClick={handleClick} >Search</button>
         </section>
         <br/><hr/>
         {show &&
-          <div>
             <Returns />
-          </div>
         }
       </div>
     </main>
