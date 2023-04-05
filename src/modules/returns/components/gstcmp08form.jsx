@@ -29,6 +29,7 @@ query getReturnFiledData($GSTIN: String!) {
 
 const Gstcmp08form = () => {
     const [proceedToFile, setProceedToFile] = useState(false)
+    const [tableData, setTableData] = useState([])
     const { state } = useLocation();
     let { id } = useParams()
     const { data:firmData } = useQuery(FIRMDATA, {
@@ -76,7 +77,39 @@ const Gstcmp08form = () => {
         document.getElementById('state_tax3').value = outward_supplies_state_tax + inward_supplies_state_tax
         document.getElementById('cess3').value = inward_supplies_cess
 
-
+        setTableData([{
+            id:1,
+            title: "Outward Supplies (including exempt supplies)",
+            supplies_value: outward_supplies_value,
+            supplies_integrated_tax: null,
+            supplies_central_tax: outward_supplies_central_tax,
+            supplies_state_tax: outward_supplies_state_tax,
+            supplies_cess: null
+        },{
+            id:2,
+            title: "Inward Supplies attracting reverse charge including import of services",
+            supplies_value: inward_supplies_value,
+            supplies_integrated_tax: inward_supplies_integrated_tax,
+            supplies_central_tax: inward_supplies_central_tax,
+            supplies_state_tax: inward_supplies_state_tax,
+            supplies_cess: inward_supplies_cess,
+        },{
+            id:3,
+            title: "Tax payable",
+            supplies_value: outward_supplies_value,
+            supplies_integrated_tax: null,
+            supplies_central_tax: outward_supplies_central_tax,
+            supplies_state_tax: outward_supplies_state_tax,
+            supplies_cess: null
+        },{
+            id:4,
+            title: "Interest payable, if any",
+            supplies_value: null,
+            supplies_integrated_tax: interest_integrated_tax,
+            supplies_central_tax: interest_central_tax ,
+            supplies_state_tax: interest_state_tax,
+            supplies_cess: interest_cess,
+        }])
     }
     return (
     <>
@@ -133,7 +166,7 @@ const Gstcmp08form = () => {
                 <input type='submit' value="Proceed to File" className='w-2/4 bg-blue-600 text-white font-semibold p-2 rounded-md' onClick={handleSubmit} />
             </div>
         </div> :
-        <ProceedToFile /> }
+        <ProceedToFile gstin={trader?.GSTIN} Legal_Name={trader?.Legal_Name} tableData={tableData}/> }
     </>
     )
 }

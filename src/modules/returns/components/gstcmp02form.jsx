@@ -20,7 +20,7 @@ const INSERT_FIRM = gql`mutation InsertCompositionDealers($isVerified: Boolean, 
   }
   `
 
-const INSERT_RETURN_FILED = gql`mutation Insert_Return_Filed($GSTIN: String!, $Legal_Name: String!, $Financial_Year: Int!, $Quarter: String!, $Filed_or_Not: Boolean!) {
+const INSERT_RETURN_FILED = gql`mutation Insert_Return_Filed($GSTIN: String!, $Legal_Name: String!, $Financial_Year: String!, $Quarter: String!, $Filed_or_Not: Boolean!) {
     insert_return_filed(objects: {GSTIN: $GSTIN, Legal_Name: $Legal_Name, Financial_Year: $Financial_Year, Quarter: $Quarter, Filed_or_Not: $Filed_or_Not}) {
       affected_rows
     }
@@ -38,7 +38,7 @@ const Gstcmp02form = () => {
         }
     })
 
-    const [insertReturnFiled, {loading:Loading ,data: returnFiledData,error:ErrorReturnFiled }] = useMutation(INSERT_RETURN_FILED, {
+    const [insertReturnFiled, { loading: Loading, data: returnFiledData, error: ErrorReturnFiled }] = useMutation(INSERT_RETURN_FILED, {
         onError(err) {
             alert(err.toString())
         }
@@ -65,8 +65,7 @@ const Gstcmp02form = () => {
         var place = document.getElementById('place').value
         var password = document.getElementById("password").value
         var confirmPassword = document.getElementById("confirm_password").value
-
-        if(username && (password === confirmPassword)) {
+        if (username && (password === confirmPassword)) {
             var salt = bcrypt.genSaltSync(10);
             var hash = bcrypt.hashSync(password, salt);
         } else if (password !== confirmPassword) {
@@ -92,7 +91,7 @@ const Gstcmp02form = () => {
             variables: {
                 GSTIN: gstin,
                 Legal_Name: legalname,
-                Financial_Year : financialYear,
+                Financial_Year: financialYear,
                 Quarter: '',
                 Filed_or_Not: false
             }
@@ -127,7 +126,7 @@ const Gstcmp02form = () => {
                         <label className='w-1/4'>Financial Year</label>
                         <input id="financial_year" type='text' className='col-auto p-2 border-2 rounded-md outline-none' />
                     </div>
-                    <hr/>
+                    <hr />
                     <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                         <label className='w-1/4'>User Name</label>
                         <input id="user_name" type='text' className='col-auto p-2 border-2 rounded-md outline-none' />
