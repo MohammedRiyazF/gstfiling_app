@@ -19,16 +19,31 @@ const FIRMDATA = gql`query credentials($id: Int!) {
   }
   `
 
+const GET_RETURN_FILED_DATA = gql`
+query getReturnFiledData($GSTIN: String!) {
+  return_filed(where: {GSTIN: {_eq: $GSTIN}}) {
+    Filed_or_Not
+  }
+}`
+
+
 const Gstcmp08form = () => {
     const [proceedToFile, setProceedToFile] = useState(false)
+    const { state } = useLocation();
     let { id } = useParams()
-    const { data } = useQuery(FIRMDATA, {
+    const { data:firmData } = useQuery(FIRMDATA, {
         variables: {
             id: id
         }
     })
-    const { state } = useLocation();
-    const trader = get(data, 'composition_dealers[0]', null)
+    const trader = get(firmData, 'composition_dealers[0]', null)
+
+    const { data:returnData } = useQuery(GET_RETURN_FILED_DATA, {
+        variables: {
+            GSTIN: trader?.GSTIN
+        }
+    })
+    const returns_firm = get(returnData, 'return_filed[0]', null)
     const gst_cmp_08 = data2.gstcmp08
 
     const handleSubmit = (event) => {
@@ -74,7 +89,7 @@ const Gstcmp08form = () => {
                     <h5><b>Trade Name :</b>{trader?.Trade_Name}</h5>
                     <h5><b>Financial Year :</b>{state?.financial_year}</h5>
                     <h5><b>Period :</b>{state?.quarter}</h5>
-                    <h5><b>Status :</b>Not filed</h5>
+                    <h5><b>Status :</b>{returns_firm?.Filed_or_Not ? 'Filed' : 'Not Filed'}</h5>
                 </section>
             </div>
             <div className="bg-green-200 h-full overflow-x-scroll">

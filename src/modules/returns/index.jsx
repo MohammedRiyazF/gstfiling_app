@@ -8,7 +8,7 @@ const ReturnIndex = (props) => {
   return (
     <div className='gap-1 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3'>
       {data2.map((item) =>
-        item.isFiled ? null : <Returns year_detail={year_detail} title={item.title} name={item.name}/>
+        item.isFiled ? null : <Returns key={item?.id} year_detail={year_detail} title={item.title} name={item.name}/>
       )}
     </div>
   )

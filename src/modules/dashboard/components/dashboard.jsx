@@ -1,9 +1,45 @@
 import React, { useState } from 'react'
 import Returns from '../../returns'
+import { gql, useMutation, useQuery } from '@apollo/client';
+import get from 'lodash/get'
+
+const FIRMDATA = gql`query credentials($id: Int!) {
+  composition_dealers(where: {id: {_eq: $id}}) {
+    id
+    GSTIN
+    Legal_Name
+    Trade_Name
+    Address
+    Financial_Year
+    Category
+    Place
+  }
+}
+`
+
+const UPDATE_FIRM = gql`mutation UpdateFirm($GSTIN: String!, $Financial_Year: String!, $Quarter: String!) {
+  update_return_filed(where: {GSTIN: {_eq: $GSTIN}}, _set: {Financial_Year: $Financial_Year, Quarter: $Quarter}) {
+    affected_rows
+  }
+}`
 
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+  const {id} = props
   const [show, setShow] = useState(false)
+  const [updateFirm, {loading,data:updatedFirm, error }] = useMutation(UPDATE_FIRM, {
+    onError(err) {
+        alert(err.toString())
+    }
+  })
+
+  const { data:firmData } = useQuery(FIRMDATA, {
+    variables: {
+        id: id
+    }
+  })
+  const trader = get(firmData, 'composition_dealers[0]', null)
+
   const initial = {
     financial_year : '',
     quarter: '',
@@ -20,7 +56,15 @@ const Dashboard = () => {
       quarter: quarter,
       period: period
     })
+    updateFirm({
+      variables : {
+        GSTIN: trader?.GSTIN,
+        Financial_Year: financial_year,
+        Quarter: quarter
+      }
+    })
     setShow(!show)
+    
     
   }
   return (

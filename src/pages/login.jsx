@@ -14,7 +14,12 @@ const CREDENTIALS = gql`query credentials {
 `
 
 const Login = () => {
-  const { data } = useQuery(CREDENTIALS)
+  const { data } = useQuery(CREDENTIALS, {
+    onError(error) {
+      console.log(error.toString(), "Please make sure Internet Connection is stable")
+
+    }
+  })
   const credentials = data?.composition_dealers
   const navigate = useNavigate();
   const handleClick = (event) => {

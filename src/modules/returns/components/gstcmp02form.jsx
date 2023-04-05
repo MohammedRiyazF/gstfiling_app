@@ -19,6 +19,14 @@ const INSERT_FIRM = gql`mutation InsertCompositionDealers($isVerified: Boolean, 
     }
   }
   `
+
+const INSERT_RETURN_FILED = gql`mutation Insert_Return_Filed($GSTIN: String!, $Legal_Name: String!, $Financial_Year: Int!, $Quarter: String!, $Filed_or_Not: Boolean!) {
+    insert_return_filed(objects: {GSTIN: $GSTIN, Legal_Name: $Legal_Name, Financial_Year: $Financial_Year, Quarter: $Quarter, Filed_or_Not: $Filed_or_Not}) {
+      affected_rows
+    }
+  }
+  `
+
 const Gstcmp02form = () => {
     var type;
     const [insertFirm, { loading, data, error }] = useMutation(INSERT_FIRM, {
@@ -30,7 +38,13 @@ const Gstcmp02form = () => {
         }
     })
 
-    if (loading) return <div className='bg-white flex justify-center items-center'>Submitting...</div>
+    const [insertReturnFiled, {loading:Loading ,data: returnFiledData,error:ErrorReturnFiled }] = useMutation(INSERT_RETURN_FILED, {
+        onError(err) {
+            alert(err.toString())
+        }
+    })
+
+    if (loading || Loading) return <div className='bg-white flex justify-center items-center'>Submitting...</div>
 
     const handleChange = (event) => {
         type = event.target.value
@@ -71,6 +85,16 @@ const Gstcmp02form = () => {
                 Place: place,
                 Username: username,
                 Password: hash
+            }
+        })
+
+        insertReturnFiled({
+            variables: {
+                GSTIN: gstin,
+                Legal_Name: legalname,
+                Financial_Year : financialYear,
+                Quarter: '',
+                Filed_or_Not: false
             }
         })
     }
