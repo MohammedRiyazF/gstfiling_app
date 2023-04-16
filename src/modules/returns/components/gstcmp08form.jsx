@@ -16,6 +16,8 @@ const FIRMDATA = gql`query credentials($id: Int!) {
       Financial_Year
       Category
       Place
+      Owner_name
+      Designation
     }
   }
   `
@@ -183,8 +185,7 @@ const Gstcmp08form = () => {
                         </>}
                 </div> :
                 <ProceedToFile 
-                    gstin={trader?.GSTIN} 
-                    Legal_Name={trader?.Legal_Name}
+                    trader={trader}
                     financial_year={state?.financial_year}
                     quarter={state?.quarter} 
                     tableData={tableData} 

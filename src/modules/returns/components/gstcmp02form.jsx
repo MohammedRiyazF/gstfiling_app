@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs-react'
 import LoadingIcon from '../../../components/loadingIcon';
 import { useNavigate } from 'react-router-dom';
 
-const INSERT_FIRM = gql`mutation InsertCompositionDealers($isVerified: Boolean, $Category: Int, $Financial_Year: Int, $Address: String, $GSTIN: String, $Legal_Name: String, $Place: String, $Trade_Name: String, $Username: String!, $Password: String!) {
+const INSERT_FIRM = gql`mutation InsertCompositionDealers($isVerified: Boolean, $Category: Int, $Financial_Year: Int, $Address: String, $GSTIN: String, $Legal_Name: String, $Place: String, $Trade_Name: String, $Username: String!, $Password: String!, $Owner_name: String!, $Designation: String!, $Phone_no: Int!) {
     insert_composition_dealers(objects: {
       GSTIN: $GSTIN, 
       Legal_Name: $Legal_Name, 
@@ -15,7 +15,10 @@ const INSERT_FIRM = gql`mutation InsertCompositionDealers($isVerified: Boolean, 
       isVerified: $isVerified, 
       Place: $Place,
       Username : $Username,
-      Password : $Password
+      Password : $Password,
+      Owner_name : $Owner_name,
+      Designation : $Designation
+      Phone_no : $Phone_no
     }) {
       affected_rows
     }
@@ -57,6 +60,9 @@ const Gstcmp02form = () => {
         var tradename = document.getElementById('tradename').value
         var address = document.getElementById('address').value
         var financialYear = document.getElementById('financial_year').value
+        var ownerName = document.getElementById('owner_name').value
+        var designation = document.getElementById('designation').value
+        var phone_no = document.getElementById('phone_no').value
         var category = type
         var isDeclared = document.getElementById('declaration').value
         var isVerified = document.getElementById('verification').value
@@ -84,7 +90,10 @@ const Gstcmp02form = () => {
                 isVerified: allVerified,
                 Place: place,
                 Username: username,
-                Password: hash
+                Password: hash,
+                Owner_name: ownerName,
+                Designation : designation,
+                Phone_no : phone_no,
             }
         })
         for (let quarter = 1; quarter <= 4; quarter++) {
@@ -130,6 +139,18 @@ const Gstcmp02form = () => {
                             <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                                 <label className='w-1/4'>Financial Year</label>
                                 <input id="financial_year" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required />
+                            </div>
+                            <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
+                                <label className='w-1/4'>Owner Name</label>
+                                <input id="owner_name" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required />
+                            </div>
+                            <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
+                                <label className='w-1/4'>Designation</label>
+                                <input id="designation" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required />
+                            </div>
+                            <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
+                                <label className='w-1/4'>Phone Number</label>
+                                <input id="phone_no" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required />
                             </div>
                             <hr />
                             <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>

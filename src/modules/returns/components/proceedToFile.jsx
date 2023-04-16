@@ -1,5 +1,5 @@
 import { gql , useMutation} from '@apollo/client'
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import LoadingIcon from '../../../components/loadingIcon'
 
@@ -17,9 +17,67 @@ const  UPDATE_RETURN_FILED_STATUS = gql`mutation updateReturnFiledStatus($GSTIN:
 }
 `
 
+const createDocument = async (financial_year, quarter, arn, date, tableData, trader) => {
+  const id_to_fetch = await fetch(`https://api.pdfmonkey.io/api/v1/documents`, {
+    method: 'POST',
+    headers: {
+        'Content-type' : 'application/json',
+        'Authorization' : 'Bearer pv4E_sveJcGQJ92Evrjz'
+    },
+    body : JSON.stringify({
+      "document_template_id" : "F50A2F64-FF59-4B9A-AF48-8A3D9D9D2D3C",
+      "payload" : {
+        "financial_year" : financial_year,
+        "quarter" : quarter,
+        "gstin" : trader?.GSTIN,
+        "legal_name" : trader?.Legal_Name,
+        "trade_name" : trader?.Trade_Name,
+        "arn" : arn,
+        "date_of_filing" : date,
+        "outward_supplies_value" : tableData[0].supplies_value,
+        "outward_supplies_integrated_tax" : tableData[0].supplies_integrated_tax,
+        "outward_supplies_central_tax" : tableData[0].supplies_central_tax,
+        "outward_supplies_state_tax" : tableData[0].supplies_state_tax,
+        "outward_supplies_cess" : tableData[0].supplies_cess,
+        "inward_supplies_value" : tableData[1].supplies_value,
+        "inward_supplies_integrated_tax" : tableData[1].supplies_integrated_tax,
+        "inward_supplies_central_tax" : tableData[1].supplies_central_tax,
+        "inward_supplies_state_tax" : tableData[1].supplies_state_tax,
+        "inward_supplies_cess" : tableData[1].supplies_cess,
+        "tax_payable_value" : tableData[2].supplies_value,
+        "tax_payable_integrated_tax" : tableData[2].supplies_integrated_tax,
+        "tax_payable_central_tax" : tableData[2].supplies_central_tax,
+        "tax_payable_state_tax" : tableData[2].supplies_state_tax,
+        "tax_payable_cess" : tableData[2].supplies_cess,
+        "interest_supplies_value" : tableData[3].supplies_value,
+        "interest_supplies_integrated_tax" : tableData[3].supplies_integrated_tax,
+        "interest_supplies_central_tax" : tableData[3].supplies_central_tax,
+        "interest_supplies_state_tax" : tableData[3].supplies_state_tax,
+        "interest_supplies_cess" : tableData[3].supplies_cess,
+        "total_tax_value" : tableData[2].supplies_value,
+        "total_tax_integrated_tax" : tableData[2].supplies_integrated_tax + tableData[3].supplies_integrated_tax,
+        "total_tax_central_tax" : tableData[2].supplies_central_tax + tableData[3].supplies_central_tax,
+        "total_tax_state_tax" : tableData[2].supplies_state_tax + tableData[3].supplies_state_tax,
+        "total_tax_cess" : tableData[2].supplies_cess + tableData[3].supplies_cess,
+        "signature" : trader?.Owner_name,
+        "name" : trader?.Owner_name,
+        "designation" : trader?.Designation,
+        "place" : trader?.Place
+      },
+      "meta": JSON.stringify({
+        "_filename": `GSTIN${trader?.GSTIN}.pdf`
+      }),
+      "status" : "pending"
+    })
+}).then(response => response.json())
+  .then((data) => { return data?.document?.id })
+
+  window.value = id_to_fetch
+}
+
 const ProceedToFile = (props) => {
   const navigate = useNavigate()
-  const {tableData, gstin, Legal_Name, financial_year, quarter} = props
+  const {tableData, trader, financial_year, quarter} = props
 
   var today = new Date();
   var arn = Math.floor((Math.random() * 10000) + 1);
@@ -30,11 +88,13 @@ const ProceedToFile = (props) => {
   const central_tax = tableData[2]?.supplies_central_tax + tableData[3]?.supplies_central_tax
   const state_tax = tableData[2]?.supplies_state_tax + tableData[3]?.supplies_state_tax
   const cess =   tableData[2]?.supplies_value + tableData[3]?.supplies_cess
+
   const handleClick = () => {
+    createDocument(financial_year, quarter, arn, date, tableData, trader)
     fileReturn({
       variables : {
-      GSTIN: gstin,
-      legal_name: Legal_Name,
+      GSTIN: trader?.GSTIN,
+      legal_name: trader?.Legal_Name,
       financial_year: financial_year,
       quarter: quarter,
       tax_detail_json : {tableData},
@@ -47,13 +107,14 @@ const ProceedToFile = (props) => {
 
     updateReturnFiledStatus({
       variables : {
-        GSTIN: gstin,
+        GSTIN: trader?.GSTIN,
         financial_year: financial_year,
         quarter: quarter,
         date_of_filing: date,
         arn: arn
       }
     })
+
   }
 
   const [fileReturn, {loading, data, error}] = useMutation(FILE_RETURN, {
@@ -71,6 +132,16 @@ const ProceedToFile = (props) => {
     }
   })
 
+  const HandleDownload = async () => {
+      await fetch(`https://api.pdfmonkey.io/api/v1/document_cards/${window.value}`, {
+        method : 'GET',
+        headers : {
+          'Authorization' : 'Bearer pv4E_sveJcGQJ92Evrjz'
+        },
+        "status" : "success"
+    }).then(response1 =>  response1.json())
+    .then(data => window.location.href = data?.document_card?.download_url)
+  }
 
   const tableBorder = "border-2 border-black"
   return (
@@ -93,7 +164,7 @@ const ProceedToFile = (props) => {
                         <th className={tableBorder}>Cess</th>
                     </tr>
                     {tableData.map((row) =>
-                        <tr key={tableData?.id}>
+                        <tr key={row?.id}>
                             <td className={tableBorder}>{row?.id}</td>
                             <td className={`${tableBorder} w-1/4`}>{row?.title}</td>
                             <td className={tableBorder}>{row?.supplies_value}</td>
@@ -109,6 +180,7 @@ const ProceedToFile = (props) => {
           </div>
         <div className="flex justify-center">
           <button className="bg-blue-400 p-3 m-4 rounded-md " onClick={handleClick}>File the Return</button>
+          <button className="bg-blue-400 p-3 m-4 rounded-md " onClick={HandleDownload}>Download the Return</button>
         </div>
       </>}
     </div>
