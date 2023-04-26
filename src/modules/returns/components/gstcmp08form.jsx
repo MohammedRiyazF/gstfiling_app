@@ -6,6 +6,10 @@ import data2 from './mock.json'
 import ProceedToFile from './proceedToFile'
 import LoadingIcon from '../../../components/loadingIcon'
 
+window.onbeforeunload = function() {
+    return "Data will be lost if you leave the page, are you sure?";
+  };
+
 const FIRMDATA = gql`query credentials($id: Int!) {
     composition_dealers(where: {id: {_eq: $id}}) {
       id
@@ -150,28 +154,28 @@ const Gstcmp08form = () => {
                                             <div>
                                                 <div className='flex justify-between p-1'>
                                                     <label>Value</label>
-                                                    {row?.Description === "Tax payable" || row?.Description === "Interest payable, if any" ? <input id={row?.Value} type="text" disabled /> :
-                                                        <input id={row?.Value} type="text" />}
+                                                    {row?.Description === "Tax payable" || row?.Description === "Interest payable, if any" ? <input id={row?.Value} type="text" autoComplete="off" disabled /> :
+                                                        <input id={row?.Value} type="text" autoComplete="off" />}
                                                 </div>
                                                 <div className='flex  justify-between p-1'>
                                                     <label>Integrated tax</label>
-                                                    {row?.Integrated_tax === "integrated_tax1" || row?.Description === "Tax payable" ? <input id={row?.Integrated_tax} type="text" disabled /> :
-                                                        <input id={row?.Integrated_tax} type="text" />}
+                                                    {row?.Integrated_tax === "integrated_tax1" || row?.Description === "Tax payable" ? <input id={row?.Integrated_tax} type="text" autoComplete="off" disabled /> :
+                                                        <input id={row?.Integrated_tax} type="text" autoComplete="off" />}
                                                 </div>
                                                 <div className='flex  justify-between p-1'>
                                                     <label>Central tax</label>
-                                                    {row?.Description === "Tax payable" ? <input id={row?.Central_tax} type="text" disabled /> :
-                                                        <input id={row?.Central_tax} type="text" />}
+                                                    {row?.Description === "Tax payable" ? <input id={row?.Central_tax} type="text" autoComplete="off" disabled /> :
+                                                        <input id={row?.Central_tax} type="text" autoComplete="off" />}
                                                 </div>
                                                 <div className='flex  justify-between p-1' >
                                                     <label>State tax</label>
-                                                    {row?.Description === "Tax payable" ? <input id={row?.State_tax} type="text" disabled /> :
-                                                        <input id={row?.State_tax} type="text" />}
+                                                    {row?.Description === "Tax payable" ? <input id={row?.State_tax} type="text" autoComplete="off" disabled /> :
+                                                        <input id={row?.State_tax} type="text" autoComplete="off" />}
                                                 </div>
                                                 <div className='flex  justify-between p-1' >
                                                     <label>Cess</label>
                                                     {row?.Integrated_tax === "integrated_tax1" || row?.Description === "Tax payable" ?
-                                                        <input id={row?.Cess} type="text" disabled /> : <input id={row?.Cess} type="text" />}
+                                                        <input id={row?.Cess} type="text" autoComplete="off" disabled /> : <input id={row?.Cess} type="text" autoComplete="off" />}
                                                 </div>
                                             </div>
                                         </section>
