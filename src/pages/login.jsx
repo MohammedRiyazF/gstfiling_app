@@ -46,11 +46,11 @@ const Login = () => {
           <h2 className="text-center text-[40px] p-3 font-bold text-white">Login to Continue</h2>
           <div className='text-center mt-10 p-4 space-x-4'>
             <label>Username</label>
-            <input id="username" type="text" className='w-2/4 p-2 outline-none' required />
+            <input id="username" type="text" className='w-2/4 p-2 outline-none' required autoComplete="off"/>
           </div>
           <div className='text-center p-4 space-x-4'>
             <label>Password</label>
-            <input id="pass" type="password" className='w-2/4 p-2 outline-none' required />
+            <input id="pass" type="password" className='w-2/4 p-2 outline-none' required autoComplete="off"/>
           </div>
           <div className='text-center mt-10'>
             <button className="w-[90%] bg-blue-600 text-white p-3 rounded-md" onClick={handleClick} value={1} >Login</button>

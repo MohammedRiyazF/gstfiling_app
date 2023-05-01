@@ -15,9 +15,9 @@ const Navbar = () => {
         <div>
           <Link to="/login">Login</Link>
         </div>
-        <div>
+        {/* <div>
           <Link to="/download">Download</Link>
-        </div>
+        </div> */}
       </section>
     </nav>
   )

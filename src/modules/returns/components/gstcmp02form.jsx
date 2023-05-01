@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs-react'
 import LoadingIcon from '../../../components/loadingIcon';
 import { useNavigate } from 'react-router-dom';
 
-const INSERT_FIRM = gql`mutation InsertCompositionDealers($isVerified: Boolean, $Category: Int, $Financial_Year: Int, $Address: String, $GSTIN: String, $Legal_Name: String, $Place: String, $Trade_Name: String, $Username: String!, $Password: String!, $Owner_name: String!, $Designation: String!, $Phone_no: Int!) {
+const INSERT_FIRM = gql`mutation InsertCompositionDealers($isVerified: Boolean, $Category: Int, $Financial_Year: Int, $Address: String, $GSTIN: String, $Legal_Name: String, $Place: String, $Trade_Name: String, $Username: String!, $Password: String!, $Owner_name: String!, $Designation: String!, $Phone_no: bigint!) {
     insert_composition_dealers(objects: {
       GSTIN: $GSTIN, 
       Legal_Name: $Legal_Name, 
@@ -122,11 +122,11 @@ const Gstcmp02form = () => {
                         <form className='grid gap-5' onSubmit={handleSubmit}>
                             <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                                 <label className='w-1/4'>GSTIN</label>
-                                <input id="gstin" type='text' className='w-auto p-2 border-2 rounded-md outline-none' required pattern='\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}' />
+                                <input id="gstin" type='text' className='w-auto p-2 border-2 rounded-md outline-none' required pattern='\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}' autoComplete="off" />
                             </div>
                             <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                                 <label className='w-1/4'>Legal Name of Business</label>
-                                <input id="legalname" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required />
+                                <input id="legalname" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required autoComplete="off"/>
                             </div>
                             <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                                 <label className='w-1/4'>Trade name, if any</label>
@@ -134,36 +134,36 @@ const Gstcmp02form = () => {
                             </div>
                             <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                                 <label className='w-1/4'>Address of Principal Place of Business</label>
-                                <input id="address" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required />
+                                <input id="address" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required autoComplete="off"/>
                             </div>
                             <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                                 <label className='w-1/4'>Financial Year</label>
-                                <input id="financial_year" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required />
+                                <input id="financial_year" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required autoComplete="off"/>
                             </div>
                             <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                                 <label className='w-1/4'>Owner Name</label>
-                                <input id="owner_name" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required />
+                                <input id="owner_name" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required autoComplete="off"/>
                             </div>
                             <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                                 <label className='w-1/4'>Designation</label>
-                                <input id="designation" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required />
+                                <input id="designation" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required autoComplete="off"/>
                             </div>
                             <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                                 <label className='w-1/4'>Phone Number</label>
-                                <input id="phone_no" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required />
+                                <input id="phone_no" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required autoComplete="off"/>
                             </div>
                             <hr />
                             <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                                 <label className='w-1/4'>User Name</label>
-                                <input id="user_name" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required />
+                                <input id="user_name" type='text' className='col-auto p-2 border-2 rounded-md outline-none' required autoComplete="off"/>
                             </div>
                             <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                                 <label className='w-1/4'>Password</label>
-                                <input id="password" type='password' className='col-auto p-2 border-2 rounded-md outline-none' required />
+                                <input id="password" type='password' className='col-auto p-2 border-2 rounded-md outline-none' required autoComplete="off"/>
                             </div>
                             <div className='grid grid-cols-1 sm:grid-cols-2 gap-5'>
                                 <label className='w-1/4'>Confirm New Password</label>
-                                <input id="confirm_password" type='password' className='col-auto p-2 border-2 rounded-md outline-none' required />
+                                <input id="confirm_password" type='password' className='col-auto p-2 border-2 rounded-md outline-none' required autoComplete="off"/>
                             </div>
                             <section>
                                 <div className='bg-gray-300 p-2 '>
@@ -204,11 +204,11 @@ const Gstcmp02form = () => {
                             <section className="grid grid-cols-1 sm:grid-cols-2">
                                 <div className='grid grid-cols-1 sm:grid-cols-2 gap-2 text-center'>
                                     <label>Name of Authorized Signatory</label>
-                                    <input id="signature" type='text' className=" p-2 border-2 rounded-md outline-none" required />
+                                    <input id="signature" type='text' className=" p-2 border-2 rounded-md outline-none" required autoComplete="off"/>
                                 </div>
                                 <div className='grid grid-cols-1 sm:grid-cols-2 gap-2 text-center'>
                                     <label>Place</label>
-                                    <input id="place" type='text' className=" p-2 border-2 rounded-md outline-none" required />
+                                    <input id="place" type='text' className=" p-2 border-2 rounded-md outline-none" required autoComplete="off"/>
                                 </div>
                             </section>
                             <section className='flex justify-end'>

@@ -1,7 +1,6 @@
 import React from'react'
 import { BrowserRouter,Routes,Route } from 'react-router-dom'
 import Dashboard from './pages/dashboard'
-import Gstfiling from './pages/gstfiling'
 import Login from './pages/login.jsx'
 import Layout from './pages/layout'
 import Home from './pages/home'
@@ -20,7 +19,6 @@ export default function App() {
             <Route path='/dashboard/index/:id' element={<Dashboard/>} />
             <Route path='/returns/gst_cmp_08/index/:id' element={<Gstcmp08form/>} />
             <Route path='/returns/gst_cmp_02/index' element={<Gstcmp02form/>} />
-            <Route path='/gstfiling' element={<Gstfiling/>} />
           </Route>
         </Routes>
     </BrowserRouter>

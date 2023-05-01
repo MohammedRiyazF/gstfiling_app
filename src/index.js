@@ -18,7 +18,7 @@ const authLink = setContext((_, { headers }) => {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : "",
-      'x-hasura-admin-secret' : 'D5sNqJuQOI7Mzrum4UyLY4uUTbi9YMxf6XWpq2e7MBQa7qzeDa56zArB2oGPll7q'
+      'x-hasura-admin-secret' : process.env.REACT_APP_HASURA_ADMIN_SECRET_KEY
     }
   }
 });

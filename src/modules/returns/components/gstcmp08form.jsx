@@ -6,10 +6,6 @@ import data2 from './mock.json'
 import ProceedToFile from './proceedToFile'
 import LoadingIcon from '../../../components/loadingIcon'
 
-window.onbeforeunload = function() {
-    return "Data will be lost if you leave the page, are you sure?";
-  };
-
 const FIRMDATA = gql`query credentials($id: Int!) {
     composition_dealers(where: {id: {_eq: $id}}) {
       id
@@ -129,6 +125,14 @@ const Gstcmp08form = () => {
         }])
 
     }
+
+    const handleChange = () => {
+        var outward_supplies_value = parseInt(document.getElementById('value1').value)
+        var percent = trader?.Category === 1 ? 0.5 : trader?.Category === 2 ? 2.5 : 0.5
+        document.getElementById('central_tax1').value = outward_supplies_value? (outward_supplies_value * percent)/100 : 0
+        document.getElementById('state_tax1').value = outward_supplies_value? (outward_supplies_value * percent)/100 : 0
+    }
+
     return (
         <>
             {!proceedToFile ?
@@ -154,28 +158,29 @@ const Gstcmp08form = () => {
                                             <div>
                                                 <div className='flex justify-between p-1'>
                                                     <label>Value</label>
-                                                    {row?.Description === "Tax payable" || row?.Description === "Interest payable, if any" ? <input id={row?.Value} type="text" autoComplete="off" disabled /> :
-                                                        <input id={row?.Value} type="text" autoComplete="off" />}
+                                                    {row?.Description === "Tax payable" || row?.Description === "Interest payable, if any" ? <input id={row?.Value} type="number" autoComplete="off" disabled /> :
+                                                        row?.Description === "Outward Supplies (including exempt supplies)" ?
+                                                        <input id={row?.Value} type="number" autoComplete="off" onChange={handleChange}/> : <input id={row?.Value} type="number" autoComplete="off"  />}
                                                 </div>
                                                 <div className='flex  justify-between p-1'>
                                                     <label>Integrated tax</label>
-                                                    {row?.Integrated_tax === "integrated_tax1" || row?.Description === "Tax payable" ? <input id={row?.Integrated_tax} type="text" autoComplete="off" disabled /> :
-                                                        <input id={row?.Integrated_tax} type="text" autoComplete="off" />}
+                                                    {row?.Integrated_tax === "integrated_tax1" || row?.Description === "Tax payable" ? <input id={row?.Integrated_tax} type="number" autoComplete="off" disabled /> :
+                                                        <input id={row?.Integrated_tax} type="number" autoComplete="off" />}
                                                 </div>
                                                 <div className='flex  justify-between p-1'>
                                                     <label>Central tax</label>
-                                                    {row?.Description === "Tax payable" ? <input id={row?.Central_tax} type="text" autoComplete="off" disabled /> :
-                                                        <input id={row?.Central_tax} type="text" autoComplete="off" />}
+                                                    {row?.Description === "Tax payable" || row?.Description === "Outward Supplies (including exempt supplies)" ? <input id={row?.Central_tax} type="number" autoComplete="off" disabled /> :
+                                                        <input id={row?.Central_tax} type="number" autoComplete="off" />}
                                                 </div>
                                                 <div className='flex  justify-between p-1' >
                                                     <label>State tax</label>
-                                                    {row?.Description === "Tax payable" ? <input id={row?.State_tax} type="text" autoComplete="off" disabled /> :
-                                                        <input id={row?.State_tax} type="text" autoComplete="off" />}
+                                                    {row?.Description === "Tax payable" || row?.Description === "Outward Supplies (including exempt supplies)" ? <input id={row?.State_tax} type="number" autoComplete="off" disabled /> :
+                                                        <input id={row?.State_tax} type="number" autoComplete="off" />}
                                                 </div>
                                                 <div className='flex  justify-between p-1' >
                                                     <label>Cess</label>
                                                     {row?.Integrated_tax === "integrated_tax1" || row?.Description === "Tax payable" ?
-                                                        <input id={row?.Cess} type="text" autoComplete="off" disabled /> : <input id={row?.Cess} type="text" autoComplete="off" />}
+                                                        <input id={row?.Cess} type="number" autoComplete="off" disabled /> : <input id={row?.Cess} type="number" autoComplete="off" />}
                                                 </div>
                                             </div>
                                         </section>

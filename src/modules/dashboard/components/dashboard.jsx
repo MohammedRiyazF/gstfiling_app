@@ -84,9 +84,7 @@ const Dashboard = (props) => {
             <input id="year_list" className="border-2 flex items-center" list="year" />
             <datalist id="year">
               <option value={2023}>2023</option>
-              <option value={2024}>2024</option>
-              <option value={2025}>2025</option>
-              <option value={2026}>2026</option>
+
             </datalist>
           </div>
           <div>

@@ -10,7 +10,7 @@ const Home = () => {
           </div>
           <div className='text-center space-y-[15px] flex-1 h-full py-10'>
             <h2>A Secure</h2>
-            <h1 className='font-bold text-white'><span className="text-orange-400">GST</span> <span className="text-green-400">Return</span> Filing</h1>
+            <h1 className='font-bold text-green-400'><span className="text-orange-400">GST</span> <span className="text-white">Return</span> Filing</h1>
             <h2>Platform</h2>
             <p>for small companies</p>
           </div>
